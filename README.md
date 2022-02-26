@@ -3,7 +3,7 @@
 To Clone this Project please follow below steps: (Make Sure You are in Master Branch and not in gh-pages branch
 1. Open Command Promt and navigate to a directory where you want to clone the Project.
 2. run below command
-       git clone 
+       git clone https://github.com/saini-sanjay/saini-sanjay.github.io.git
    
 
 ## Available Scripts
