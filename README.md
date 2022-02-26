@@ -1,6 +1,9 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To Clone this Project please follow below steps:
+1. Open Command Promt and navigate to a directory where you want to clone the Project.
+2. run below command
+   
 
 ## Available Scripts
 
