@@ -1,17 +1,33 @@
 import React from 'react';
-import { useFormik } from 'formik';
 import { FaEye,FaEyeSlash } from "react-icons/fa";
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import { useSelector,useDispatch } from 'react-redux';
-import { handleFullName,handleEmail,handlePassword,handlePasswordShown,handleValidation,submitForm } from '../Redux/reducers';
+import { handleFullName,handleEmail,handlePassword,handlePasswordShown,handleValidation,submitForm,handleModalClose } from '../Redux/reducers';
+
+const boxStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  color:'info.main',
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 
 function FormComponent() {
     const formData=useSelector((state) => state.formReducer.user);
     const errors=useSelector((state) => state.formReducer.errors);
     const isPasswordShown=useSelector((state) => state.formReducer.isPasswordShown);
+    const newUserCreated=useSelector((state) => state.formReducer.newUserCreated);
     const dispatch=useDispatch();
-console.log("Form rendered with Data");
-console.log(formData)
+    
+
   const handleSubmit=(e)=>{
     e.preventDefault();
     const data={
@@ -20,7 +36,6 @@ console.log(formData)
       Password:formData.password
     }
         dispatch(submitForm(data));
-    console.log("Ajax call end")
   }
 
     return (
@@ -87,7 +102,22 @@ console.log(formData)
                className="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-red-500 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-blue"
       >Submit</button>
     </form>
-
+     
+    <Modal
+        open={newUserCreated.successUser}
+        onClose={()=>dispatch(handleModalClose())}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={boxStyle}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {`Welcome,${newUserCreated.userName} `}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            You have successfully registered !
+          </Typography>
+        </Box>
+      </Modal>
         </div>
     );
 }

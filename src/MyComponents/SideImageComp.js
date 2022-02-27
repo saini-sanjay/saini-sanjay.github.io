@@ -6,25 +6,15 @@ import { useSelector } from 'react-redux';
 
 function SideImageComp() {
     const isDarkMode=useSelector((state) => state.formReducer.isDarkModeOn)
-    if(isDarkMode){
+    const displayImage=isDarkMode?nightImage:dayImage;
         return (
         
-            <div className="h-32 md:h-auto md:w-4/6">
-                        <img className="object-cover w-full h-full md:rounded-l-3xl" src={nightImage}
+            <div className="h-32 md:h-auto md:w-7/12">
+                        <img className="object-cover w-full h-full md:rounded-l-3xl " src={displayImage}
                             alt="img" />
             </div>
         
-    );
-
-    }
-    return (
-        
-            <div className="h-32 md:h-auto md:w-4/6 ">
-                        <img className="object-cover w-full h-full md:rounded-l-3xl" src={dayImage}
-                            alt="img" />
-            </div>
-        
-    );
+     );
 }
 
 export default SideImageComp;

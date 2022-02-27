@@ -2,8 +2,7 @@ import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "axios";
 
 export const submitForm=createAsyncThunk('userSubmit', async(userData)=>{
-  console.log("Data Send on Ajax:") 
-  console.log(userData)
+  
   return axios.post( 'https://jsonplaceholder.typicode.com/users',userData).then((res) => res);
 })
 
@@ -20,6 +19,10 @@ export const signUpFormReducer = createSlice({
     user:initialUser,
     isDarkModeOn:false,
     isPasswordShown:false,
+    newUserCreated:{
+      successUser:false,
+      userName:''
+    },
     errors:{
         fullName:'',
         email:'',
@@ -42,6 +45,10 @@ export const signUpFormReducer = createSlice({
     handlePasswordShown:(state)=>{
         state.isPasswordShown= !state.isPasswordShown;
         
+    },
+    handleModalClose:(state)=>{
+      state.newUserCreated.successUser=false;
+      state.newUserCreated.userName='';
     },
     
     handleValidation:(state,action)=>{
@@ -76,12 +83,14 @@ export const signUpFormReducer = createSlice({
   },
   extraReducers:{
     [submitForm.pending]:(state,action)=>{
-      console.log("User submission in Progress");
+      console.log("User Submission in Progress")
     },
     [submitForm.fulfilled]:(state,action)=>{
-      console.log("User submission successful")
-      console.log(action.payload.data)
+      console.log("User submission successful");
+      state.newUserCreated.successUser=true;
+      state.newUserCreated.userName=action.payload.data.Name;
       state.user=initialUser;
+      
     },
     [submitForm.rejected]:(state,action)=>{
        console.log("User rejected");
@@ -89,7 +98,7 @@ export const signUpFormReducer = createSlice({
   }
 })
 
-// Action creators are generated for each case reducer function
-export const { handleFullName,handleEmail,handlePassword,handleDarkMode,handlePasswordShown,handleValidation,handleTransition } = signUpFormReducer.actions
+// Action creators 
+export const { handleFullName,handleEmail,handlePassword,handleDarkMode,handlePasswordShown,handleValidation,handleTransition,handleModalClose } = signUpFormReducer.actions
 
 export default signUpFormReducer.reducer
